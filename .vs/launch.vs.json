@@ -1,0 +1,12 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "4_rpg_turn_based_game.exe",
+      "name": "4_rpg_turn_based_game.exe"
+    }
+  ]
+}

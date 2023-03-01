@@ -1,0 +1,5 @@
+C:/Users/Svyatoslav/Desktop/C++/CMakeStudy/cmake_4_rpg_turn_based_game/out/build/x64-Debug/CMakeFiles/game_bin_target.dir
+C:/Users/Svyatoslav/Desktop/C++/CMakeStudy/cmake_4_rpg_turn_based_game/out/build/x64-Debug/CMakeFiles/rebuild_cache.dir
+C:/Users/Svyatoslav/Desktop/C++/CMakeStudy/cmake_4_rpg_turn_based_game/out/build/x64-Debug/CMakeFiles/results_bin_target.dir
+C:/Users/Svyatoslav/Desktop/C++/CMakeStudy/cmake_4_rpg_turn_based_game/out/build/x64-Debug/CMakeFiles/4_rpg_turn_based_game.dir
+C:/Users/Svyatoslav/Desktop/C++/CMakeStudy/cmake_4_rpg_turn_based_game/out/build/x64-Debug/CMakeFiles/edit_cache.dir
