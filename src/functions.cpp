@@ -605,7 +605,13 @@ void saveGame(const std::vector<Character>& vCharacters, const std::list<Gift>& 
 		for (const auto& character : vCharacters)
 		{
 			file.write((char*)&character.typeCharacter, sizeof(character.typeCharacter));
-			file.write((char*)&character.name, sizeof(character.name));
+
+			////////////09.03.23///////////////////////////
+			int64_t sizeName = character.name.size();
+			file.write((char*)&sizeName, sizeof(sizeName));
+			file.write(character.name.c_str(), sizeName);
+			///////////////////////////////////////////////
+
 			file.write((char*)&character.pos, sizeof(character.pos));
 			file.write((char*)&character.life, sizeof(character.life));
 			file.write((char*)&character.armor, sizeof(character.armor));
@@ -641,10 +647,17 @@ void readGame(std::vector<Character>& vCharacters, std::list<Gift>& lGifts, int6
 	{
 		file.read((char*)&step, sizeof(step));
 
-		for (const auto& character : vCharacters)
+		for (auto& character : vCharacters)
 		{
 			file.read((char*)&character.typeCharacter, sizeof(character.typeCharacter));
-			file.read((char*)&character.name, sizeof(character.name));
+
+			////////////09.03.23//////////////////////////////////
+			int64_t sizeName;
+			file.read((char*)&sizeName, sizeof(sizeName));
+			character.name.resize(sizeName);
+			file.read((char*)character.name.c_str(), sizeName);
+			//////////////////////////////////////////////////////
+
 			file.read((char*)&character.pos, sizeof(character.pos));
 			file.read((char*)&character.life, sizeof(character.life));
 			file.read((char*)&character.armor, sizeof(character.armor));
