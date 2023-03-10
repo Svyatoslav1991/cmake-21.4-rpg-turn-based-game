@@ -33,7 +33,7 @@ void printGame(const std::vector<Character>& vCharacters, const std::list<Gift>&
 
 			field[y][x] = 'E';
 		}
-	} 
+	}
 
 	for (const auto& gift : lGifts)
 	{
@@ -129,9 +129,9 @@ Character createRandomEnemy() noexcept
 
 	enemy.name = "Enemy#" + std::to_string(i++);
 
-	enemy.life = rand()%101 + 50;
-	enemy.armor = rand()%51;
-	enemy.damage = rand()%16 + 15;
+	enemy.life = rand() % 101 + 50;
+	enemy.armor = rand() % 51;
+	enemy.damage = rand() % 16 + 15;
 
 	return enemy;
 }
@@ -147,7 +147,7 @@ void placeEnemiesOnMap(std::vector<Character>& vCharacters) noexcept
 		int64_t y = rand() % 20;
 
 		bool isEmptyField = true;
-		
+
 		for (int64_t j = i - 1; j >= 0; j--)
 		{
 			if (x == vCharacters[j].pos.x && y == vCharacters[j].pos.y)
@@ -235,7 +235,7 @@ int64_t makeMove(std::vector<Character>& vCharacters, std::list<Gift>& lGifts) n
 	{
 		makeAnemeiesMoves(vCharacters, lGifts);
 	}
-	
+
 	return 1;
 }
 
@@ -248,7 +248,7 @@ Point makeMainHeroMove(Character& character) noexcept
 	int64_t y = character.pos.y;
 
 	char step;
-	
+
 	if (x == 0 && y == 0)
 	{
 		do
@@ -305,7 +305,7 @@ Point makeMainHeroMove(Character& character) noexcept
 			step = myCin<decltype(step)>();
 		} while (step != 'w' && step != 'd' && step != 's' && step != '2' && step != '3');
 	}
-	else if (x == N-1)
+	else if (x == N - 1)
 	{
 		do
 		{
@@ -663,7 +663,7 @@ void readGame(std::vector<Character>& vCharacters, std::list<Gift>& lGifts, int6
 			file.read((char*)&character.armor, sizeof(character.armor));
 			file.read((char*)&character.damage, sizeof(character.damage));
 		}
-		
+
 		int64_t giftSize;
 		file.read((char*)&giftSize, sizeof(giftSize));
 
@@ -693,7 +693,7 @@ void createGift(std::list<Gift>& lGifts, std::vector<Character>& vCharacters) no
 
 	Gift gift;
 	gift.present = static_cast<Present>(rand() % 3);
-	Point newPos; 
+	Point newPos;
 
 	do
 	{
@@ -788,16 +788,25 @@ std::map<int64_t, std::string> getResults()
 
 	if (file.is_open())
 	{
-		int64_t value;
+		int64_t size, value;
 		std::string name;
 
-		while (file.eof())
+		file.read((char*)&size, sizeof(size));
+
+		for (int64_t i = 0; i < size; ++i)
 		{
 			file.read((char*)&value, sizeof(value));
-			file.read((char*)&name, sizeof(name));
+
+			//////////10.03.23//////////////////////////////////
+			int64_t sizeName;
+			file.read((char*)&sizeName, sizeof(sizeName));
+			name.resize(sizeName);
+			file.read((char*)name.c_str(), sizeName);
+			////////////////////////////////////////////////////
 
 			result.emplace(value, name);
 		}
+
 
 		file.close();
 	}
@@ -825,10 +834,17 @@ void saveResults(const std::map<int64_t, std::string>& result)
 
 	if (file.is_open())
 	{
+		int64_t size = result.size();
+		file.write((char*)&size, sizeof(size));
 		for (const auto& p : result)
 		{
 			file.write((char*)&p.first, sizeof(p.first));
-			file.write((char*)&p.second, sizeof(p.second));
+
+			////////////10.03.23///////////////////////////
+			int64_t sizeName = p.second.size();
+			file.write((char*)&sizeName, sizeof(sizeName));
+			file.write(p.second.c_str(), sizeName);
+			///////////////////////////////////////////////
 		}
 
 		file.close();
